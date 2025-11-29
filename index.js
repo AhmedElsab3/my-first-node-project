@@ -6,10 +6,11 @@ app.use(express.json());
 app.set('view engine', 'ejs');
 // you can put this in .env file
 mongoose.connect("mongodb+srv://ahmedelsaba:tfJDH1wZXxYb4PKw@cluster0.wnaettc.mongodb.net/?appName=Cluster0").
-then(() => {
-    app.listen(3000, () => { console.log("Server running on port 3000") });
-    console.log("Connected to MongoDB")}).
-catch((err) => console.log("Error connecting to MongoDB"));
+    then(() => {
+        app.listen(3000, () => { console.log("Server running on port 3000") });
+        console.log("Connected to MongoDB")
+    }).
+    catch((err) => console.log("Error connecting to MongoDB"));
 
 const Article = require('./models/Article');
 
@@ -17,7 +18,7 @@ const Article = require('./models/Article');
 
 app.get("/articles", async (req, res) => {
     const articles = await Article.find();
-    res.json(articles);
+    res.render('articles', { articles: articles });
 })
 
 app.get("/articles/:id", async (req, res) => {
@@ -26,14 +27,14 @@ app.get("/articles/:id", async (req, res) => {
 })
 
 app.post('/article', async (req, res) => {
- const newArticle = new Article();
- newArticle.title = req.body.title;
- newArticle.body = req.body.body;
- newArticle.numViews = req.body.numViews;
- await newArticle.save();
+    const newArticle = new Article();
+    newArticle.title = req.body.title;
+    newArticle.body = req.body.body;
+    newArticle.numViews = req.body.numViews;
+    await newArticle.save();
 
 
-   res.json({ message: 'Article created' });
+    res.json({ message: 'Article created' });
 
 
 });
@@ -51,7 +52,7 @@ app.get('/hi', (req, res) => {
 });
 
 app.get('/', (req, res) => {
-    res.send('This is my main routes');
+    res.render('welcome');
 });
 
 app.post('/post', (req, res) => res.send('This is post route'));
