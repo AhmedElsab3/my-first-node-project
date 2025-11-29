@@ -7,7 +7,8 @@ app.set('view engine', 'ejs');
 // you can put this in .env file
 mongoose.connect("mongodb+srv://ahmedelsaba:tfJDH1wZXxYb4PKw@cluster0.wnaettc.mongodb.net/?appName=Cluster0").
     then(() => {
-        app.listen(3000, () => { console.log("Server running on port 3000") });
+        const port = process.env.PORT || 3000;
+        app.listen(port, () => { console.log(`Server running on port ${port}`) });
         console.log("Connected to MongoDB")
     }).
     catch((err) => console.log("Error connecting to MongoDB"));
